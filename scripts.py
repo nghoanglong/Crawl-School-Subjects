@@ -4,20 +4,21 @@ from bs4 import BeautifulSoup
 
 
 def collect_data(numbers, subjects, summaries):
-    data = []
+    data = {}
+    data['subjects'] = []
 
-    for idx, item in enumerate(numbers):
+    for idx in range(len(numbers)):
         if idx > 0:
             number = int(numbers[idx].getText())
             subject = subjects[idx].getText()
             summary = summaries[idx].getText()
-            data.append(
+            data['subjects'].append(
                 {'number': number, 'subject': subject, 'summary': summary})
     print('Done crawl')
 
     try:
         with open('data.json', 'w', encoding='utf-8') as f:
-            json.dump(data, f, ensure_ascii=False)
+            json.dump(data, f, ensure_ascii=False, indent=2) #convert obj to JSON string and write to file
     except IOError as err:
         print(err)
 
